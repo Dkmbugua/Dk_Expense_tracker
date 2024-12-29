@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body style="background: linear-gradient(to right, #4facfe, #00f2fe); color: #fff; font-family: Arial, sans-serif;">
+
+    <div class="container mt-4" style="background: rgba(0, 0, 0, 0.8); border-radius: 10px; padding: 20px;">
+        <h1 class="mb-4 text-center">Expense Tracker</h1>
+
+        <!-- Profile Section -->
+        <div class="card mb-4" style="background: rgba(255, 255, 255, 0.1); border: none;">
+            <div class="card-body text-center">
+                <h3>User Profile</h3>
+                <p><strong>Name:</strong></p>
+                <p><strong>Age:</strong></p>
+                <p><strong>Occupation:</strong></p>
+                <a href="/edit_profile" class="btn btn-primary btn-sm" style="background-color: #00bcd4; border: none;">Edit Profile</a>
+            </div>
+        </div>
+
+        <!-- Expense and Income Sections -->
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="mb-3">Expenses:</h2>
+                <ul class="list-group" style="background: rgba(255, 255, 255, 0.1);">
+                    {% for expense in expenses %}
+                        <li class="list-group-item d-flex justify-content-between" style="background: rgba(0, 0, 0, 0.5); color: #fff;">
+                            {{ expense }}
+                            <span>
+                                <a href="/edit_expense/{{ loop.index0 }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="/delete_expense/{{ loop.index0 }}" class="btn btn-danger btn-sm">Delete</a>
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <form action="/add_expense" method="post" class="mt-3">
+                    <div class="input-group">
+                        <label for="amount" class="input-group-text" style="background-color: #00bcd4; color: #fff;">Add Expense:</label>
+                        <input type="number" step="0.01" name="amount" class="form-control" required style="border: none; border-radius: 5px;">
+                        <button type="submit" class="btn btn-primary" style="background-color: #00bcd4; border: none;">Add</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="mb-3">Incomes:</h2>
+                <ul class="list-group" style="background: rgba(255, 255, 255, 0.1);">
+                    {% for income in incomes %}
+                        <li class="list-group-item d-flex justify-content-between" style="background: rgba(0, 0, 0, 0.5); color: #fff;">
+                            {{ income }}
+                            <span>
+                                <a href="/edit_income/{{ loop.index0 }}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="/delete_income/{{ loop.index0 }}" class="btn btn-danger btn-sm">Delete</a>
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <form action="/add_income" method="post" class="mt-3">
+                    <div class="input-group">
+                        <label for="amount" class="input-group-text" style="background-color: #00bcd4; color: #fff;">Add Income:</label>
+                        <input type="number" step="0.01" name="amount" class="form-control" required style="border: none; border-radius: 5px;">
+                        <button type="submit" class="btn btn-primary" style="background-color: #00bcd4; border: none;">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/analytics" class="btn btn-info btn-lg" style="background-color: #009688; border: none;">View Analytics</a>
+        </div>
+    </div>
+
+</body>
+</html>

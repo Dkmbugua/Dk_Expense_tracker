@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4 text-center">Financial Analytics</h1>
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Convert Python data to JavaScript objects
+        var expenses = {{ expenses | tojson }};
+        var incomes = {{ incomes | tojson }};
+
+        // Prepare data for Plotly
+        var traceExpenses = {
+            x: Array.from(Array(expenses.length).keys()),
+            y: expenses.map(e => e[1]),
+            type: 'bar',
+            name: 'Expenses'
+        };
+
+        var traceIncomes = {
+            x: Array.from(Array(incomes.length).keys()),
+            y: incomes.map(i => i[1]),
+            type: 'bar',
+            name: 'Incomes'
+        };
+
+        var layout = {
+            title: 'Expenses and Incomes Overview',
+            xaxis: { title: 'Entries' },
+            yaxis: { title: 'Amount' }
+        };
+
+        var data = [traceExpenses, traceIncomes];
+
+        Plotly.newPlot('chart', data, layout);
+    </script>
+</body>
+</html>
